@@ -11,7 +11,7 @@ export function generate(specs: Obj): Record<string, string> {
   const ui = specs.ui_spec.ui_spec;
   const project = [
     'name: IonApp',
-    'options:', '  bundleIdPrefix: com.ion', '  deploymentTarget:', '    iOS: "16.0"',
+    'options:', '  bundleIdPrefix: com.ion', '  projectFormat: xcode15_3', '  deploymentTarget:', '    iOS: "16.0"',
     'targets:',
     '  IonApp:', '    type: application', '    platform: iOS',
     '    sources: [Sources, Resources]',

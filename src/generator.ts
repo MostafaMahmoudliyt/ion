@@ -3,7 +3,7 @@
 // validated specs, and writes what they return. An extension may not reach outside its own folder.
 
 import { readFileSync } from 'node:fs';
-import { join, posix, resolve as resolvePath } from 'node:path';
+import { isAbsolute, join, posix, relative, resolve as resolvePath, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ION_VERSION } from './constitution.ts';
 import { validateSpecs } from './spec-validate.ts';
@@ -71,9 +71,11 @@ export async function runGenerators(specs: SpecSet, extensionsDir: string, ids?:
   if (missing.length) throw new IonValidationError(missing.map((id) => ({ code: 'UNKNOWN_GENERATOR', path: id, message: `"${id}" is not in registry.json` })));
 
   const runs: GeneratorRun[] = [];
+  const extensionsRoot = resolvePath(extensionsDir);
   for (const entry of wanted) {
-    const dir = resolvePath(extensionsDir, entry.path);
-    if (!dir.startsWith(resolvePath(extensionsDir) + '/')) throw new IonValidationError([{ code: 'UNSAFE_PATH', path: entry.id, message: 'registry path leaves the extensions folder' }]);
+    const dir = resolvePath(extensionsRoot, entry.path);
+    const relativeDir = relative(extensionsRoot, dir);
+    if (relativeDir === '' || relativeDir === '..' || relativeDir.startsWith(`..${sep}`) || isAbsolute(relativeDir)) throw new IonValidationError([{ code: 'UNSAFE_PATH', path: entry.id, message: 'registry path leaves the extensions folder' }]);
     const manifest = JSON.parse(readFileSync(join(dir, 'manifest.json'), 'utf8')) as GeneratorManifest;
     const problems = validateManifest(manifest, entry);
     if (problems.length) throw new IonValidationError(problems.map((i) => ({ ...i, path: `${entry.id}.${i.path}` })));

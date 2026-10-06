@@ -14,6 +14,7 @@ test('ui-ios: XcodeGen project + Swift sources + the spec resource, deterministi
 test('ui-ios: project.yml names the sources, resources, bundle id and keeps ATS on', () => {
   const p = out['project.yml'];
   assert.match(p, /sources: \[Sources, Resources\]/);
+  assert.match(p, /projectFormat: xcode15_3/);
   assert.ok(p.includes(`PRODUCT_BUNDLE_IDENTIFIER: ${BUNDLE_ID}`));
   assert.match(p, /ION_API: ""/); assert.match(p, /ION_PERMISSIONS: ""/);
   assert.doesNotMatch(p, /NSAllowsArbitraryLoads/);
