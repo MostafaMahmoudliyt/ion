@@ -24,7 +24,7 @@ export function generate(specs: Obj): Record<string, string> {
         // Own files only. Add your backend origin to connect-src to use index.html with a real API.
         security: { csp: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'" },
       },
-      bundle: { active: true, targets: 'all', icon: ['icons/icon.png'] },
+      bundle: { active: true, targets: 'all', icon: ['icons/32x32.png', 'icons/128x128.png', 'icons/128x128@2x.png', 'icons/icon.icns', 'icons/icon.ico'] },
     }),
     'src-tauri/Cargo.toml': ['[package]', 'name = "ion-desktop"', 'version = "1.0.0"', 'edition = "2021"', '', '[build-dependencies]', 'tauri-build = { version = "2", features = [] }', '', '[dependencies]', 'tauri = { version = "2", features = [] }', ''].join('\n'),
     'src-tauri/build.rs': 'fn main() {\n    tauri_build::build()\n}\n',

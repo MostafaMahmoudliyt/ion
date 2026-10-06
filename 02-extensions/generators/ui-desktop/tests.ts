@@ -15,6 +15,7 @@ test('ui-desktop: loads the sibling web output, own-files CSP, no fs/shell capab
   const conf = JSON.parse(out['src-tauri/tauri.conf.json']);
   assert.equal(conf.build.frontendDist, FRONTEND_DIST);
   assert.equal(conf.identifier, IDENTIFIER);
+  assert.deepEqual(conf.bundle.icon, ['icons/32x32.png', 'icons/128x128.png', 'icons/128x128@2x.png', 'icons/icon.icns', 'icons/icon.ico']);
   assert.equal(conf.app.windows[0].url, 'demo.html');
   assert.equal(conf.app.windows[0].label, 'main');
   assert.match(conf.app.security.csp, /default-src 'self'/);
