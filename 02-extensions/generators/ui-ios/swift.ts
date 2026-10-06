@@ -88,11 +88,11 @@ struct RestData: DataSource {
     let token: String?
 
     private func call(_ method: String, _ path: String, body: JSON? = nil) async throws -> Data {
-        var comps = URLComponents(string: base.hasSuffix("/") ? String(base.dropLast()) : base)
+        guard var comps = URLComponents(string: base.hasSuffix("/") ? String(base.dropLast()) : base) else { throw IonError(message: "Bad URL") }
         let parts = path.split(separator: "?", maxSplits: 1).map(String.init)
-        comps?.path = (comps?.path ?? "") + parts[0]
-        if parts.count > 1 { comps?.percentEncodedQuery = parts[1] }
-        guard let url = comps?.url else { throw IonError(message: "Bad URL") }
+        comps.path += parts[0]
+        if parts.count > 1 { comps.percentEncodedQuery = parts[1] }
+        guard let url = comps.url else { throw IonError(message: "Bad URL") }
         var req = URLRequest(url: url)
         req.httpMethod = method
         req.timeoutInterval = 15

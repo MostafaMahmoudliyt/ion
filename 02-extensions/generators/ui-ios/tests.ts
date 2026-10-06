@@ -35,5 +35,7 @@ test('ui-ios: Swift is balanced, @main exactly once, same permission keys and AP
   const views = out['Sources/Views.swift'];
   for (const op of ['list', 'create', 'update', 'archive']) assert.ok(views.includes(`entity:\\(src.entity):${op}`) || views.includes(`entity:\\($0.entity):${op}`), op);
   const data = out['Sources/Data.swift'];
+  assert.match(data, /guard var comps = URLComponents/);
+  assert.match(data, /comps\.path \+= parts\[0\]/);
   for (const op of ['list', 'read', 'create', 'update', 'archive']) assert.ok(data.includes(`path("${op}")`), op);
 });
