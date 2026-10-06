@@ -1,0 +1,11 @@
+{
+  "id": "events-node-postgres",
+  "kind": "api",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["schema", "event"],
+  "ion": "3.0.0",
+  "description": "event_spec + schema_spec -> handlers.js for Node.js on PostgreSQL: one transaction for the ledger and every database step, outward effects (push, email, webhook, workflow) only after commit.",
+  "target": "backend/events"
+}

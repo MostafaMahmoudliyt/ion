@@ -1,0 +1,30 @@
+export declare const ION_VERSION = "3.1.0";
+export declare const ENTITY_TYPES: readonly ["person", "organization", "place", "thing", "event", "document", "transaction", "resource", "group", "role", "process", "product", "service", "course", "message", "notification", "review", "category", "tag", "custom"];
+export declare const RELATIONSHIP_TYPES: readonly ["one-to-one", "one-to-many", "many-to-one", "many-to-many", "self"];
+export declare const EVENT_TYPES: readonly ["create", "update", "delete", "custom"];
+export declare const EVENT_ACTIONS: readonly ["send_notification", "increment", "decrement", "log", "update_field", "create_entity", "delete_entity", "trigger_workflow", "send_email", "call_webhook"];
+export declare const ATTRIBUTE_TYPES: readonly ["string", "number", "integer", "boolean", "date", "timestamp", "uuid", "email", "url", "phone", "json", "array", "enum", "money"];
+export type AttributeType = (typeof ATTRIBUTE_TYPES)[number];
+export type EventAction = (typeof EVENT_ACTIONS)[number];
+export type EventType = (typeof EVENT_TYPES)[number];
+export declare const RESERVED_COLUMNS: readonly ["id", "created_at", "archived_at"];
+export declare const LOCALES: readonly ["ar", "en"];
+export declare const RESERVED_PREFIX = "ion_";
+export declare const DEFAULT_THEME: {
+    readonly primary_color: "#1E3A8A";
+    readonly density: "medium";
+};
+export declare const WIDGETS: Record<string, string>;
+export declare const RULE_COUNTS: {
+    readonly schema: 10;
+    readonly relationship: 5;
+    readonly event: 10;
+    readonly ui: 20;
+    readonly publish: 0;
+};
+export declare const RULE_TOTAL = 45;
+export declare const ENTITY_METADATA: readonly ["i18n", "versioned", "indexed"];
+export declare const ATTRIBUTE_METADATA: readonly ["transitions"];
+export declare const RELATIONSHIP_METADATA: readonly ["cascade"];
+export declare const EVENT_METADATA: readonly ["i18n", "rate"];
+export declare const CASCADE_MODES: readonly ["none", "restrict", "archive"];

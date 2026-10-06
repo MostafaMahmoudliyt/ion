@@ -1,0 +1,13 @@
+{
+  "roles": {
+    "viewer": ["entity:*:list", "entity:*:read"],
+    "support": { "extends": ["viewer"], "permissions": ["entity:support_ticket:*", "entity:support_ticket_comment:*", "!entity:*:archive"] },
+    "warehouse": { "extends": ["viewer"], "permissions": ["entity:shipment:*", "entity:order:update", "relationship:order_shipment:*", "!entity:shipment:archive"] },
+    "vendor": { "extends": ["viewer"], "permissions": ["entity:product:create", "entity:product:update", "relationship:vendor_products:*", "!entity:order:read", "!entity:order:list"] }
+  },
+  "tokens": {
+    "support-token-aaaaaaaa": "support",
+    "warehouse-token-bbbbbb": "warehouse",
+    "vendor-token-cccccccccc": "vendor"
+  }
+}

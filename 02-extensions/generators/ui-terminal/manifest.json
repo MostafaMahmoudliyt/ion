@@ -1,0 +1,11 @@
+{
+  "id": "ui-terminal",
+  "kind": "ui",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["ui"],
+  "ion": "3.0.0",
+  "description": "ui_spec -> a dependency-free terminal app (tui.cjs): menu, list with paging/search, detail, create/edit, archive; in-memory demo or a REST backend.",
+  "target": "terminal"
+}

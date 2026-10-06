@@ -1,0 +1,296 @@
+{
+  "schema_spec": {
+    "tables": [
+      {
+        "entity": "student",
+        "name": "Student",
+        "type": "person",
+        "table": "students",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "primary": true,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "email",
+            "type": "email",
+            "nullable": false,
+            "unique": true
+          },
+          {
+            "name": "gpa",
+            "type": "number",
+            "nullable": true
+          },
+          {
+            "name": "status",
+            "type": "enum",
+            "nullable": true,
+            "default": "active",
+            "values": [
+              "active",
+              "graduated"
+            ],
+            "transitions": {
+              "active": [
+                "graduated"
+              ]
+            }
+          },
+          {
+            "name": "enrolled_at",
+            "type": "timestamp",
+            "nullable": true,
+            "auto": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "nullable": false,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "archived_at",
+            "type": "timestamp",
+            "nullable": true,
+            "system": true
+          }
+        ],
+        "indexes": [],
+        "constraints": [],
+        "security": {
+          "row_level": true
+        },
+        "archivable": true
+      },
+      {
+        "entity": "professor",
+        "name": "Professor",
+        "type": "person",
+        "table": "professors",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "primary": true,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "email",
+            "type": "email",
+            "nullable": false,
+            "unique": true
+          },
+          {
+            "name": "department",
+            "type": "string",
+            "nullable": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "nullable": false,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "archived_at",
+            "type": "timestamp",
+            "nullable": true,
+            "system": true
+          }
+        ],
+        "indexes": [],
+        "constraints": [],
+        "security": {
+          "row_level": true
+        },
+        "archivable": true
+      },
+      {
+        "entity": "course",
+        "name": "Course",
+        "type": "course",
+        "table": "courses",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "primary": true,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "code",
+            "type": "string",
+            "nullable": false,
+            "unique": true
+          },
+          {
+            "name": "credits",
+            "type": "integer",
+            "nullable": false
+          },
+          {
+            "name": "enrolled_count",
+            "type": "integer",
+            "nullable": true,
+            "default": 0
+          },
+          {
+            "name": "professor_id",
+            "type": "uuid",
+            "nullable": true
+          },
+          {
+            "name": "version",
+            "type": "integer",
+            "nullable": false,
+            "default": 1,
+            "system": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "nullable": false,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "archived_at",
+            "type": "timestamp",
+            "nullable": true,
+            "system": true
+          }
+        ],
+        "indexes": [
+          {
+            "columns": [
+              "code"
+            ]
+          }
+        ],
+        "constraints": [],
+        "versioned": true,
+        "security": {
+          "row_level": true
+        },
+        "archivable": true
+      },
+      {
+        "entity": "department",
+        "name": "Department",
+        "type": "organization",
+        "table": "departments",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "primary": true,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "faculty_id",
+            "type": "uuid",
+            "nullable": true
+          },
+          {
+            "name": "professor_count",
+            "type": "integer",
+            "nullable": true,
+            "default": 0
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "nullable": false,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "archived_at",
+            "type": "timestamp",
+            "nullable": true,
+            "system": true
+          }
+        ],
+        "indexes": [],
+        "constraints": [],
+        "security": {
+          "row_level": true
+        },
+        "archivable": true
+      },
+      {
+        "entity": "faculty",
+        "name": "Faculty",
+        "type": "organization",
+        "table": "faculties",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "nullable": false,
+            "primary": true,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "nullable": false,
+            "auto": true,
+            "system": true
+          },
+          {
+            "name": "archived_at",
+            "type": "timestamp",
+            "nullable": true,
+            "system": true
+          }
+        ],
+        "indexes": [],
+        "constraints": [],
+        "security": {
+          "row_level": true
+        },
+        "archivable": true
+      }
+    ]
+  }
+}

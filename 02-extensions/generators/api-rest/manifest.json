@@ -1,0 +1,11 @@
+{
+  "id": "api-rest",
+  "kind": "api",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["relationship", "ui"],
+  "ion": "3.0.0",
+  "description": "relationship_spec + ui_spec -> routes.js: the REST route table (entity CRUD, relationship links, notifications, activity) the generated UI calls. A route table only; it does not implement a server.",
+  "target": "backend/api"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "server-node-sqlite",
+  "kind": "api",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["schema", "relationship", "event", "ui"],
+  "ion": "3.0.0",
+  "description": "All four specs -> a runnable zero-dependency server (server.mjs + spec.json): REST API on node:http, SQLite via node:sqlite, token auth with enforced permissions, event execution (notifications, counters, audit ledger, outbox) and the web UI served same-origin. A Spec interpreter, for one owner.",
+  "target": "backend/server"
+}

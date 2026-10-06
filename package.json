@@ -1,0 +1,40 @@
+{
+  "name": "ion",
+  "version": "3.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.ts 02-extensions/generators/*/tests.ts 02-extensions/processors/tests.ts",
+    "typecheck": "tsc -p .",
+    "build:mit": "node src/cli.ts build examples/mit.json --out out/mit",
+    "preview:mit": "node src/cli.ts preview examples/mit.json --out out/mit",
+    "publish:mit": "node src/cli.ts publish examples/mit.json --out out/mit",
+    "deploy:mit": "node src/cli.ts deploy out/mit/university.ion out/site",
+    "build:types": "node scripts/build-types.mjs"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "jsdom": "^26.0.0",
+    "pg": "^8.13.0"
+  },
+  "main": "src/index.ts",
+  "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "src",
+    "types",
+    "02-extensions",
+    "examples",
+    "README.md",
+    "RULES.md"
+  ]
+}

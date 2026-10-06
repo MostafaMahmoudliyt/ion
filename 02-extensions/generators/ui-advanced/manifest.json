@@ -1,0 +1,11 @@
+{
+  "id": "ui-advanced",
+  "kind": "utility",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["schema", "ui"],
+  "ion": "3.0.0",
+  "description": "schema_spec + ui_spec -> ui_advanced.json (+ ui_advanced.js): an optional overlay of derived UI behaviour (wizard flows for long forms, first-use empty states, analytics metrics, detail composition, interaction tokens, personalization preferences). Data only; renderers may read it, none must.",
+  "target": "web"
+}

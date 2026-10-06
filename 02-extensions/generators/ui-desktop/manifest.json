@@ -1,0 +1,11 @@
+{
+  "id": "ui-desktop",
+  "kind": "ui",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["ui"],
+  "ion": "3.0.0",
+  "description": "ui_spec -> a Tauri 2 desktop project (Windows/macOS/Linux) that wraps the ui-web output of the same .uapp (../../web).",
+  "target": "desktop"
+}

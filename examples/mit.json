@@ -1,0 +1,265 @@
+{
+  "app": {
+    "id": "university",
+    "name": "University",
+    "domain": "education"
+  },
+  "entities": [
+    {
+      "id": "student",
+      "name": "Student",
+      "type": "person",
+      "attributes": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "unique": true
+        },
+        {
+          "name": "gpa",
+          "type": "number"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "values": [
+            "active",
+            "graduated"
+          ],
+          "default": "active",
+          "metadata": {
+            "transitions": {
+              "active": [
+                "graduated"
+              ]
+            }
+          }
+        },
+        {
+          "name": "enrolled_at",
+          "type": "timestamp",
+          "auto": true
+        }
+      ]
+    },
+    {
+      "id": "professor",
+      "name": "Professor",
+      "type": "person",
+      "attributes": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "unique": true
+        },
+        {
+          "name": "department",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "course",
+      "name": "Course",
+      "type": "course",
+      "attributes": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "code",
+          "type": "string",
+          "required": true,
+          "unique": true
+        },
+        {
+          "name": "credits",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "enrolled_count",
+          "type": "integer",
+          "default": 0
+        },
+        {
+          "name": "professor_id",
+          "type": "uuid"
+        }
+      ],
+      "metadata": {
+        "versioned": true,
+        "indexed": [
+          "code"
+        ]
+      }
+    },
+    {
+      "id": "department",
+      "name": "Department",
+      "type": "organization",
+      "attributes": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "faculty_id",
+          "type": "uuid"
+        },
+        {
+          "name": "professor_count",
+          "type": "integer",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "id": "faculty",
+      "name": "Faculty",
+      "type": "organization",
+      "attributes": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "enrollment",
+      "from": "Student",
+      "to": "Course",
+      "type": "many-to-many",
+      "attributes": [
+        {
+          "name": "grade",
+          "type": "number"
+        },
+        {
+          "name": "enrolled_on",
+          "type": "date",
+          "auto": true
+        }
+      ]
+    },
+    {
+      "id": "teaching",
+      "from": "Professor",
+      "to": "Course",
+      "type": "one-to-many",
+      "metadata": {
+        "cascade": "restrict"
+      }
+    },
+    {
+      "id": "course_department",
+      "from": "Course",
+      "to": "Department",
+      "type": "many-to-one"
+    },
+    {
+      "id": "department_faculty",
+      "from": "Department",
+      "to": "Faculty",
+      "type": "many-to-one",
+      "metadata": {
+        "cascade": "restrict"
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "student.enrolled",
+      "name": "Student Enrolled",
+      "type": "create",
+      "relationship": "enrollment",
+      "actor": "Student",
+      "target": "Course",
+      "triggers": [
+        {
+          "action": "send_notification",
+          "to": "Student",
+          "message": "You are enrolled in a course"
+        },
+        {
+          "action": "increment",
+          "field": "Course.enrolled_count"
+        },
+        {
+          "action": "log",
+          "to": "audit"
+        }
+      ],
+      "metadata": {
+        "rate": {
+          "max": 1000,
+          "per_seconds": 60
+        }
+      }
+    },
+    {
+      "id": "student.graduated",
+      "name": "Student Graduated",
+      "type": "custom",
+      "actor": "Student",
+      "target": "Course",
+      "triggers": [
+        {
+          "action": "send_notification",
+          "to": "Student",
+          "message": "Congratulations, you graduated"
+        },
+        {
+          "action": "update_field",
+          "field": "Student.status",
+          "value": "graduated"
+        },
+        {
+          "action": "send_email",
+          "to": "Student",
+          "subject": "Graduation",
+          "body": "Congratulations on your graduation."
+        }
+      ]
+    },
+    {
+      "id": "professor.hired",
+      "name": "Professor Hired",
+      "type": "custom",
+      "actor": "Department",
+      "target": "Professor",
+      "triggers": [
+        {
+          "action": "send_notification",
+          "to": "Professor",
+          "message": "Welcome to the department"
+        },
+        {
+          "action": "increment",
+          "field": "Department.professor_count"
+        },
+        {
+          "action": "log"
+        }
+      ]
+    }
+  ]
+}

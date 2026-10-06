@@ -1,0 +1,37 @@
+{
+  "uapp_spec": {
+    "ion_version": "3.1.0",
+    "app": {
+      "id": "university",
+      "name": "University",
+      "domain": "education"
+    },
+    "genome": {
+      "locale": "ar",
+      "direction": "rtl",
+      "theme": {
+        "primary_color": "#1E3A8A"
+      }
+    },
+    "specs": {
+      "schema": "schema_spec.json",
+      "relationship": "relationship_spec.json",
+      "event": "event_spec.json",
+      "ui": "ui_spec.json"
+    },
+    "manifest_hash": "sha256:3e056d3744dbf32bc01872e537b819410f84a05953a2319a28b2c451f7dd0050",
+    "generators_used": [
+      "api-rest",
+      "cloud-cloudflare",
+      "events-node-postgres",
+      "server-node-sqlite",
+      "sql-postgres",
+      "ui-advanced",
+      "ui-android",
+      "ui-desktop",
+      "ui-ios",
+      "ui-terminal",
+      "ui-web"
+    ]
+  }
+}

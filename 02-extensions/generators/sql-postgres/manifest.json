@@ -1,0 +1,11 @@
+{
+  "id": "sql-postgres",
+  "kind": "database",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["schema", "relationship", "event"],
+  "ion": "3.0.0",
+  "description": "schema_spec + relationship_spec + event_spec -> PostgreSQL migrations (tables, keys, partial unique indexes, row-level security, append-only system records).",
+  "target": "backend/database"
+}

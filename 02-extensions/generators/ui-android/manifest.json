@@ -1,0 +1,11 @@
+{
+  "id": "ui-android",
+  "kind": "ui",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["ui"],
+  "ion": "3.0.0",
+  "description": "ui_spec -> an Android Studio project (Kotlin + Jetpack Compose): menu, list with search/paging, detail, create/edit, archive; REST backend or in-memory demo.",
+  "target": "android"
+}

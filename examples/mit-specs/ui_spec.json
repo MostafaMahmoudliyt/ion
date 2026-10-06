@@ -1,0 +1,1559 @@
+{
+  "ui_spec": {
+    "locales": [
+      "ar",
+      "en"
+    ],
+    "default_locale": "ar",
+    "pages": [
+      {
+        "id": "student_list",
+        "title": "Students",
+        "labels": {
+          "en": "Students"
+        },
+        "type": "list",
+        "data_source": "students",
+        "path": "/students",
+        "columns": [
+          "name",
+          "email",
+          "gpa",
+          "status",
+          "enrolled_at",
+          "created_at"
+        ],
+        "layout": "table",
+        "actions": [
+          "view",
+          "edit",
+          "delete"
+        ],
+        "pagination": {
+          "size": 20
+        },
+        "search": true,
+        "filters": [
+          "gpa",
+          "status",
+          "enrolled_at"
+        ],
+        "permission": "entity:student:list",
+        "sort": {
+          "field": "created_at",
+          "direction": "desc"
+        },
+        "page_sizes": [
+          10,
+          20,
+          50,
+          100
+        ],
+        "confirm": [
+          "delete"
+        ],
+        "states": {
+          "empty": {
+            "labels": {
+              "en": "Nothing here yet",
+              "ar": "لا توجد سجلات بعد"
+            }
+          },
+          "loading": {
+            "labels": {
+              "en": "Loading…",
+              "ar": "جارٍ التحميل…"
+            }
+          },
+          "error": {
+            "labels": {
+              "en": "Something went wrong",
+              "ar": "حدث خطأ ما"
+            }
+          }
+        },
+        "responsive": {
+          "compact": "cards",
+          "regular": "table"
+        },
+        "breadcrumb": [
+          "student_list"
+        ]
+      },
+      {
+        "id": "student_create",
+        "title": "New Student",
+        "labels": {
+          "en": "New Student"
+        },
+        "type": "form",
+        "mode": "create",
+        "data_source": "students",
+        "path": "/students/new",
+        "fields": [
+          "name",
+          "email",
+          "gpa",
+          "status"
+        ],
+        "submit_action": "student.create",
+        "permission": "entity:student:create",
+        "breadcrumb": [
+          "student_list",
+          "student_create"
+        ]
+      },
+      {
+        "id": "student_detail",
+        "title": "Student",
+        "labels": {
+          "en": "Student"
+        },
+        "type": "detail",
+        "data_source": "students",
+        "path": "/students/:id",
+        "fields": [
+          "name",
+          "email",
+          "gpa",
+          "status",
+          "enrolled_at",
+          "created_at"
+        ],
+        "permission": "entity:student:read",
+        "confirm": [
+          "delete"
+        ],
+        "breadcrumb": [
+          "student_list",
+          "student_detail"
+        ]
+      },
+      {
+        "id": "student_edit",
+        "title": "Edit Student",
+        "labels": {
+          "en": "Edit Student"
+        },
+        "type": "form",
+        "mode": "edit",
+        "data_source": "students",
+        "path": "/students/:id/edit",
+        "fields": [
+          "name",
+          "email",
+          "gpa",
+          "status"
+        ],
+        "submit_action": "student.update",
+        "permission": "entity:student:update",
+        "breadcrumb": [
+          "student_list",
+          "student_detail",
+          "student_edit"
+        ]
+      },
+      {
+        "id": "professor_list",
+        "title": "Professors",
+        "labels": {
+          "en": "Professors"
+        },
+        "type": "list",
+        "data_source": "professors",
+        "path": "/professors",
+        "columns": [
+          "name",
+          "email",
+          "department",
+          "created_at"
+        ],
+        "layout": "table",
+        "actions": [
+          "view",
+          "edit",
+          "delete"
+        ],
+        "pagination": {
+          "size": 20
+        },
+        "search": true,
+        "filters": [],
+        "permission": "entity:professor:list",
+        "sort": {
+          "field": "created_at",
+          "direction": "desc"
+        },
+        "page_sizes": [
+          10,
+          20,
+          50,
+          100
+        ],
+        "confirm": [
+          "delete"
+        ],
+        "states": {
+          "empty": {
+            "labels": {
+              "en": "Nothing here yet",
+              "ar": "لا توجد سجلات بعد"
+            }
+          },
+          "loading": {
+            "labels": {
+              "en": "Loading…",
+              "ar": "جارٍ التحميل…"
+            }
+          },
+          "error": {
+            "labels": {
+              "en": "Something went wrong",
+              "ar": "حدث خطأ ما"
+            }
+          }
+        },
+        "responsive": {
+          "compact": "cards",
+          "regular": "table"
+        },
+        "breadcrumb": [
+          "professor_list"
+        ]
+      },
+      {
+        "id": "professor_create",
+        "title": "New Professor",
+        "labels": {
+          "en": "New Professor"
+        },
+        "type": "form",
+        "mode": "create",
+        "data_source": "professors",
+        "path": "/professors/new",
+        "fields": [
+          "name",
+          "email",
+          "department"
+        ],
+        "submit_action": "professor.create",
+        "permission": "entity:professor:create",
+        "breadcrumb": [
+          "professor_list",
+          "professor_create"
+        ]
+      },
+      {
+        "id": "professor_detail",
+        "title": "Professor",
+        "labels": {
+          "en": "Professor"
+        },
+        "type": "detail",
+        "data_source": "professors",
+        "path": "/professors/:id",
+        "fields": [
+          "name",
+          "email",
+          "department",
+          "created_at"
+        ],
+        "permission": "entity:professor:read",
+        "confirm": [
+          "delete"
+        ],
+        "breadcrumb": [
+          "professor_list",
+          "professor_detail"
+        ]
+      },
+      {
+        "id": "professor_edit",
+        "title": "Edit Professor",
+        "labels": {
+          "en": "Edit Professor"
+        },
+        "type": "form",
+        "mode": "edit",
+        "data_source": "professors",
+        "path": "/professors/:id/edit",
+        "fields": [
+          "name",
+          "email",
+          "department"
+        ],
+        "submit_action": "professor.update",
+        "permission": "entity:professor:update",
+        "breadcrumb": [
+          "professor_list",
+          "professor_detail",
+          "professor_edit"
+        ]
+      },
+      {
+        "id": "course_list",
+        "title": "Courses",
+        "labels": {
+          "en": "Courses"
+        },
+        "type": "list",
+        "data_source": "courses",
+        "path": "/courses",
+        "columns": [
+          "name",
+          "code",
+          "credits",
+          "enrolled_count",
+          "created_at"
+        ],
+        "layout": "table",
+        "actions": [
+          "view",
+          "edit",
+          "delete"
+        ],
+        "pagination": {
+          "size": 20
+        },
+        "search": true,
+        "filters": [
+          "credits",
+          "enrolled_count"
+        ],
+        "permission": "entity:course:list",
+        "sort": {
+          "field": "created_at",
+          "direction": "desc"
+        },
+        "page_sizes": [
+          10,
+          20,
+          50,
+          100
+        ],
+        "confirm": [
+          "delete"
+        ],
+        "states": {
+          "empty": {
+            "labels": {
+              "en": "Nothing here yet",
+              "ar": "لا توجد سجلات بعد"
+            }
+          },
+          "loading": {
+            "labels": {
+              "en": "Loading…",
+              "ar": "جارٍ التحميل…"
+            }
+          },
+          "error": {
+            "labels": {
+              "en": "Something went wrong",
+              "ar": "حدث خطأ ما"
+            }
+          }
+        },
+        "responsive": {
+          "compact": "cards",
+          "regular": "table"
+        },
+        "breadcrumb": [
+          "course_list"
+        ]
+      },
+      {
+        "id": "course_create",
+        "title": "New Course",
+        "labels": {
+          "en": "New Course"
+        },
+        "type": "form",
+        "mode": "create",
+        "data_source": "courses",
+        "path": "/courses/new",
+        "fields": [
+          "name",
+          "code",
+          "credits",
+          "enrolled_count",
+          "professor_id",
+          "department_id"
+        ],
+        "submit_action": "course.create",
+        "permission": "entity:course:create",
+        "breadcrumb": [
+          "course_list",
+          "course_create"
+        ]
+      },
+      {
+        "id": "course_detail",
+        "title": "Course",
+        "labels": {
+          "en": "Course"
+        },
+        "type": "detail",
+        "data_source": "courses",
+        "path": "/courses/:id",
+        "fields": [
+          "name",
+          "code",
+          "credits",
+          "enrolled_count",
+          "professor_id",
+          "department_id",
+          "created_at"
+        ],
+        "permission": "entity:course:read",
+        "confirm": [
+          "delete"
+        ],
+        "breadcrumb": [
+          "course_list",
+          "course_detail"
+        ]
+      },
+      {
+        "id": "course_edit",
+        "title": "Edit Course",
+        "labels": {
+          "en": "Edit Course"
+        },
+        "type": "form",
+        "mode": "edit",
+        "data_source": "courses",
+        "path": "/courses/:id/edit",
+        "fields": [
+          "name",
+          "code",
+          "credits",
+          "enrolled_count",
+          "professor_id",
+          "department_id"
+        ],
+        "submit_action": "course.update",
+        "permission": "entity:course:update",
+        "breadcrumb": [
+          "course_list",
+          "course_detail",
+          "course_edit"
+        ]
+      },
+      {
+        "id": "department_list",
+        "title": "Departments",
+        "labels": {
+          "en": "Departments"
+        },
+        "type": "list",
+        "data_source": "departments",
+        "path": "/departments",
+        "columns": [
+          "name",
+          "professor_count",
+          "created_at"
+        ],
+        "layout": "table",
+        "actions": [
+          "view",
+          "edit",
+          "delete"
+        ],
+        "pagination": {
+          "size": 20
+        },
+        "search": true,
+        "filters": [
+          "professor_count"
+        ],
+        "permission": "entity:department:list",
+        "sort": {
+          "field": "created_at",
+          "direction": "desc"
+        },
+        "page_sizes": [
+          10,
+          20,
+          50,
+          100
+        ],
+        "confirm": [
+          "delete"
+        ],
+        "states": {
+          "empty": {
+            "labels": {
+              "en": "Nothing here yet",
+              "ar": "لا توجد سجلات بعد"
+            }
+          },
+          "loading": {
+            "labels": {
+              "en": "Loading…",
+              "ar": "جارٍ التحميل…"
+            }
+          },
+          "error": {
+            "labels": {
+              "en": "Something went wrong",
+              "ar": "حدث خطأ ما"
+            }
+          }
+        },
+        "responsive": {
+          "compact": "cards",
+          "regular": "table"
+        },
+        "breadcrumb": [
+          "department_list"
+        ]
+      },
+      {
+        "id": "department_create",
+        "title": "New Department",
+        "labels": {
+          "en": "New Department"
+        },
+        "type": "form",
+        "mode": "create",
+        "data_source": "departments",
+        "path": "/departments/new",
+        "fields": [
+          "name",
+          "faculty_id",
+          "professor_count"
+        ],
+        "submit_action": "department.create",
+        "permission": "entity:department:create",
+        "breadcrumb": [
+          "department_list",
+          "department_create"
+        ]
+      },
+      {
+        "id": "department_detail",
+        "title": "Department",
+        "labels": {
+          "en": "Department"
+        },
+        "type": "detail",
+        "data_source": "departments",
+        "path": "/departments/:id",
+        "fields": [
+          "name",
+          "faculty_id",
+          "professor_count",
+          "created_at"
+        ],
+        "permission": "entity:department:read",
+        "confirm": [
+          "delete"
+        ],
+        "breadcrumb": [
+          "department_list",
+          "department_detail"
+        ]
+      },
+      {
+        "id": "department_edit",
+        "title": "Edit Department",
+        "labels": {
+          "en": "Edit Department"
+        },
+        "type": "form",
+        "mode": "edit",
+        "data_source": "departments",
+        "path": "/departments/:id/edit",
+        "fields": [
+          "name",
+          "faculty_id",
+          "professor_count"
+        ],
+        "submit_action": "department.update",
+        "permission": "entity:department:update",
+        "breadcrumb": [
+          "department_list",
+          "department_detail",
+          "department_edit"
+        ]
+      },
+      {
+        "id": "faculty_list",
+        "title": "Faculties",
+        "labels": {
+          "en": "Faculties"
+        },
+        "type": "list",
+        "data_source": "faculties",
+        "path": "/faculties",
+        "columns": [
+          "name",
+          "created_at"
+        ],
+        "layout": "table",
+        "actions": [
+          "view",
+          "edit",
+          "delete"
+        ],
+        "pagination": {
+          "size": 20
+        },
+        "search": true,
+        "filters": [],
+        "permission": "entity:faculty:list",
+        "sort": {
+          "field": "created_at",
+          "direction": "desc"
+        },
+        "page_sizes": [
+          10,
+          20,
+          50,
+          100
+        ],
+        "confirm": [
+          "delete"
+        ],
+        "states": {
+          "empty": {
+            "labels": {
+              "en": "Nothing here yet",
+              "ar": "لا توجد سجلات بعد"
+            }
+          },
+          "loading": {
+            "labels": {
+              "en": "Loading…",
+              "ar": "جارٍ التحميل…"
+            }
+          },
+          "error": {
+            "labels": {
+              "en": "Something went wrong",
+              "ar": "حدث خطأ ما"
+            }
+          }
+        },
+        "responsive": {
+          "compact": "cards",
+          "regular": "table"
+        },
+        "breadcrumb": [
+          "faculty_list"
+        ]
+      },
+      {
+        "id": "faculty_create",
+        "title": "New Faculty",
+        "labels": {
+          "en": "New Faculty"
+        },
+        "type": "form",
+        "mode": "create",
+        "data_source": "faculties",
+        "path": "/faculties/new",
+        "fields": [
+          "name"
+        ],
+        "submit_action": "faculty.create",
+        "permission": "entity:faculty:create",
+        "breadcrumb": [
+          "faculty_list",
+          "faculty_create"
+        ]
+      },
+      {
+        "id": "faculty_detail",
+        "title": "Faculty",
+        "labels": {
+          "en": "Faculty"
+        },
+        "type": "detail",
+        "data_source": "faculties",
+        "path": "/faculties/:id",
+        "fields": [
+          "name",
+          "created_at"
+        ],
+        "permission": "entity:faculty:read",
+        "confirm": [
+          "delete"
+        ],
+        "breadcrumb": [
+          "faculty_list",
+          "faculty_detail"
+        ]
+      },
+      {
+        "id": "faculty_edit",
+        "title": "Edit Faculty",
+        "labels": {
+          "en": "Edit Faculty"
+        },
+        "type": "form",
+        "mode": "edit",
+        "data_source": "faculties",
+        "path": "/faculties/:id/edit",
+        "fields": [
+          "name"
+        ],
+        "submit_action": "faculty.update",
+        "permission": "entity:faculty:update",
+        "breadcrumb": [
+          "faculty_list",
+          "faculty_detail",
+          "faculty_edit"
+        ]
+      }
+    ],
+    "data_sources": [
+      {
+        "id": "students",
+        "entity": "student",
+        "labels": {
+          "en": {
+            "singular": "Student",
+            "plural": "Students"
+          }
+        },
+        "display": "name",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "widget": "text",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Name"
+            }
+          },
+          {
+            "name": "email",
+            "type": "email",
+            "widget": "email",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Email"
+            }
+          },
+          {
+            "name": "gpa",
+            "type": "number",
+            "widget": "number",
+            "required": false,
+            "auto": false,
+            "labels": {
+              "en": "Gpa"
+            }
+          },
+          {
+            "name": "status",
+            "type": "enum",
+            "widget": "select",
+            "required": false,
+            "auto": false,
+            "labels": {
+              "en": "Status"
+            },
+            "values": [
+              "active",
+              "graduated"
+            ]
+          },
+          {
+            "name": "enrolled_at",
+            "type": "timestamp",
+            "widget": "datetime",
+            "required": false,
+            "auto": true,
+            "labels": {
+              "en": "Enrolled at"
+            }
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "widget": "datetime",
+            "required": false,
+            "auto": true,
+            "system": true,
+            "labels": {
+              "en": "Created",
+              "ar": "تاريخ الإنشاء"
+            }
+          }
+        ],
+        "relations": [
+          {
+            "relationship": "enrollment",
+            "side": "from",
+            "other": "course",
+            "type": "many-to-many",
+            "many": true,
+            "title": {
+              "entity": "course"
+            },
+            "attributes": [
+              {
+                "name": "grade",
+                "type": "number",
+                "widget": "number",
+                "required": false,
+                "auto": false,
+                "labels": {
+                  "en": "Grade"
+                }
+              },
+              {
+                "name": "enrolled_on",
+                "type": "date",
+                "widget": "date",
+                "required": false,
+                "auto": true,
+                "labels": {
+                  "en": "Enrolled on"
+                }
+              }
+            ],
+            "paths": {
+              "list": "/api/students/:fromId/enrollments",
+              "create": "/api/students/:fromId/enrollments",
+              "update": "/api/students/:fromId/enrollments/:toId",
+              "delete": "/api/students/:fromId/enrollments/:toId"
+            }
+          }
+        ],
+        "filters": [
+          {
+            "field": "gpa",
+            "kind": "range",
+            "type": "number"
+          },
+          {
+            "field": "status",
+            "kind": "select",
+            "values": [
+              "active",
+              "graduated"
+            ]
+          },
+          {
+            "field": "enrolled_at",
+            "kind": "range",
+            "type": "timestamp"
+          }
+        ],
+        "search_fields": [
+          "name",
+          "email"
+        ],
+        "surfaces": {
+          "notifications": true,
+          "activity": true
+        },
+        "api": {
+          "list": {
+            "method": "GET",
+            "path": "/api/students"
+          },
+          "create": {
+            "method": "POST",
+            "path": "/api/students"
+          },
+          "read": {
+            "method": "GET",
+            "path": "/api/students/:id"
+          },
+          "update": {
+            "method": "PATCH",
+            "path": "/api/students/:id"
+          },
+          "archive": {
+            "method": "DELETE",
+            "path": "/api/students/:id"
+          },
+          "notifications": {
+            "method": "GET",
+            "path": "/api/students/:id/notifications"
+          },
+          "activity": {
+            "method": "GET",
+            "path": "/api/students/:id/activity"
+          }
+        }
+      },
+      {
+        "id": "professors",
+        "entity": "professor",
+        "labels": {
+          "en": {
+            "singular": "Professor",
+            "plural": "Professors"
+          }
+        },
+        "display": "name",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "widget": "text",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Name"
+            }
+          },
+          {
+            "name": "email",
+            "type": "email",
+            "widget": "email",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Email"
+            }
+          },
+          {
+            "name": "department",
+            "type": "string",
+            "widget": "text",
+            "required": false,
+            "auto": false,
+            "labels": {
+              "en": "Department"
+            }
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "widget": "datetime",
+            "required": false,
+            "auto": true,
+            "system": true,
+            "labels": {
+              "en": "Created",
+              "ar": "تاريخ الإنشاء"
+            }
+          }
+        ],
+        "relations": [
+          {
+            "relationship": "teaching",
+            "side": "from",
+            "other": "course",
+            "type": "one-to-many",
+            "many": true,
+            "title": {
+              "entity": "course"
+            },
+            "attributes": [],
+            "paths": {
+              "list": "/api/professors/:fromId/teachings",
+              "create": "/api/professors/:fromId/teachings",
+              "update": "/api/professors/:fromId/teachings/:toId",
+              "delete": "/api/professors/:fromId/teachings/:toId"
+            }
+          }
+        ],
+        "filters": [],
+        "search_fields": [
+          "name",
+          "email",
+          "department"
+        ],
+        "surfaces": {
+          "notifications": true,
+          "activity": true
+        },
+        "api": {
+          "list": {
+            "method": "GET",
+            "path": "/api/professors"
+          },
+          "create": {
+            "method": "POST",
+            "path": "/api/professors"
+          },
+          "read": {
+            "method": "GET",
+            "path": "/api/professors/:id"
+          },
+          "update": {
+            "method": "PATCH",
+            "path": "/api/professors/:id"
+          },
+          "archive": {
+            "method": "DELETE",
+            "path": "/api/professors/:id"
+          },
+          "notifications": {
+            "method": "GET",
+            "path": "/api/professors/:id/notifications"
+          },
+          "activity": {
+            "method": "GET",
+            "path": "/api/professors/:id/activity"
+          }
+        }
+      },
+      {
+        "id": "courses",
+        "entity": "course",
+        "labels": {
+          "en": {
+            "singular": "Course",
+            "plural": "Courses"
+          }
+        },
+        "display": "name",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "widget": "text",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Name"
+            }
+          },
+          {
+            "name": "code",
+            "type": "string",
+            "widget": "text",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Code"
+            }
+          },
+          {
+            "name": "credits",
+            "type": "integer",
+            "widget": "integer",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Credits"
+            }
+          },
+          {
+            "name": "enrolled_count",
+            "type": "integer",
+            "widget": "integer",
+            "required": false,
+            "auto": false,
+            "labels": {
+              "en": "Enrolled count"
+            }
+          },
+          {
+            "name": "professor_id",
+            "type": "uuid",
+            "widget": "relation",
+            "required": false,
+            "auto": false,
+            "labels": {
+              "en": "Professor"
+            },
+            "target": "professor",
+            "relationship": "teaching",
+            "label_entity": "professor"
+          },
+          {
+            "name": "department_id",
+            "type": "uuid",
+            "widget": "relation",
+            "required": false,
+            "auto": false,
+            "labels": {
+              "en": "Department"
+            },
+            "target": "department",
+            "relationship": "course_department",
+            "label_entity": "department"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "widget": "datetime",
+            "required": false,
+            "auto": true,
+            "system": true,
+            "labels": {
+              "en": "Created",
+              "ar": "تاريخ الإنشاء"
+            }
+          }
+        ],
+        "relations": [
+          {
+            "relationship": "enrollment",
+            "side": "to",
+            "other": "student",
+            "type": "many-to-many",
+            "many": true,
+            "title": {
+              "entity": "student"
+            },
+            "attributes": [
+              {
+                "name": "grade",
+                "type": "number",
+                "widget": "number",
+                "required": false,
+                "auto": false,
+                "labels": {
+                  "en": "Grade"
+                }
+              },
+              {
+                "name": "enrolled_on",
+                "type": "date",
+                "widget": "date",
+                "required": false,
+                "auto": true,
+                "labels": {
+                  "en": "Enrolled on"
+                }
+              }
+            ],
+            "paths": {
+              "list": "/api/courses/:toId/enrollments",
+              "create": "/api/students/:fromId/enrollments",
+              "update": "/api/students/:fromId/enrollments/:toId",
+              "delete": "/api/students/:fromId/enrollments/:toId"
+            }
+          },
+          {
+            "relationship": "teaching",
+            "side": "to",
+            "other": "professor",
+            "type": "one-to-many",
+            "many": false,
+            "title": {
+              "entity": "professor"
+            },
+            "attributes": [],
+            "paths": {
+              "list": "/api/courses/:toId/teachings",
+              "create": "/api/professors/:fromId/teachings",
+              "update": "/api/professors/:fromId/teachings/:toId",
+              "delete": "/api/professors/:fromId/teachings/:toId"
+            }
+          },
+          {
+            "relationship": "course_department",
+            "side": "from",
+            "other": "department",
+            "type": "many-to-one",
+            "many": false,
+            "title": {
+              "entity": "department"
+            },
+            "attributes": [],
+            "paths": {
+              "list": "/api/courses/:fromId/course-departments",
+              "create": "/api/courses/:fromId/course-departments",
+              "update": "/api/courses/:fromId/course-departments/:toId",
+              "delete": "/api/courses/:fromId/course-departments/:toId"
+            }
+          }
+        ],
+        "filters": [
+          {
+            "field": "credits",
+            "kind": "range",
+            "type": "integer"
+          },
+          {
+            "field": "enrolled_count",
+            "kind": "range",
+            "type": "integer"
+          }
+        ],
+        "search_fields": [
+          "name",
+          "code"
+        ],
+        "surfaces": {
+          "notifications": false,
+          "activity": true
+        },
+        "api": {
+          "list": {
+            "method": "GET",
+            "path": "/api/courses"
+          },
+          "create": {
+            "method": "POST",
+            "path": "/api/courses"
+          },
+          "read": {
+            "method": "GET",
+            "path": "/api/courses/:id"
+          },
+          "update": {
+            "method": "PATCH",
+            "path": "/api/courses/:id"
+          },
+          "archive": {
+            "method": "DELETE",
+            "path": "/api/courses/:id"
+          },
+          "activity": {
+            "method": "GET",
+            "path": "/api/courses/:id/activity"
+          }
+        }
+      },
+      {
+        "id": "departments",
+        "entity": "department",
+        "labels": {
+          "en": {
+            "singular": "Department",
+            "plural": "Departments"
+          }
+        },
+        "display": "name",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "widget": "text",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Name"
+            }
+          },
+          {
+            "name": "faculty_id",
+            "type": "uuid",
+            "widget": "relation",
+            "required": false,
+            "auto": false,
+            "labels": {
+              "en": "Faculty"
+            },
+            "target": "faculty",
+            "relationship": "department_faculty",
+            "label_entity": "faculty"
+          },
+          {
+            "name": "professor_count",
+            "type": "integer",
+            "widget": "integer",
+            "required": false,
+            "auto": false,
+            "labels": {
+              "en": "Professor count"
+            }
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "widget": "datetime",
+            "required": false,
+            "auto": true,
+            "system": true,
+            "labels": {
+              "en": "Created",
+              "ar": "تاريخ الإنشاء"
+            }
+          }
+        ],
+        "relations": [
+          {
+            "relationship": "course_department",
+            "side": "to",
+            "other": "course",
+            "type": "many-to-one",
+            "many": true,
+            "title": {
+              "entity": "course"
+            },
+            "attributes": [],
+            "paths": {
+              "list": "/api/departments/:toId/course-departments",
+              "create": "/api/courses/:fromId/course-departments",
+              "update": "/api/courses/:fromId/course-departments/:toId",
+              "delete": "/api/courses/:fromId/course-departments/:toId"
+            }
+          },
+          {
+            "relationship": "department_faculty",
+            "side": "from",
+            "other": "faculty",
+            "type": "many-to-one",
+            "many": false,
+            "title": {
+              "entity": "faculty"
+            },
+            "attributes": [],
+            "paths": {
+              "list": "/api/departments/:fromId/department-faculties",
+              "create": "/api/departments/:fromId/department-faculties",
+              "update": "/api/departments/:fromId/department-faculties/:toId",
+              "delete": "/api/departments/:fromId/department-faculties/:toId"
+            }
+          }
+        ],
+        "filters": [
+          {
+            "field": "professor_count",
+            "kind": "range",
+            "type": "integer"
+          }
+        ],
+        "search_fields": [
+          "name"
+        ],
+        "surfaces": {
+          "notifications": false,
+          "activity": true
+        },
+        "api": {
+          "list": {
+            "method": "GET",
+            "path": "/api/departments"
+          },
+          "create": {
+            "method": "POST",
+            "path": "/api/departments"
+          },
+          "read": {
+            "method": "GET",
+            "path": "/api/departments/:id"
+          },
+          "update": {
+            "method": "PATCH",
+            "path": "/api/departments/:id"
+          },
+          "archive": {
+            "method": "DELETE",
+            "path": "/api/departments/:id"
+          },
+          "activity": {
+            "method": "GET",
+            "path": "/api/departments/:id/activity"
+          }
+        }
+      },
+      {
+        "id": "faculties",
+        "entity": "faculty",
+        "labels": {
+          "en": {
+            "singular": "Faculty",
+            "plural": "Faculties"
+          }
+        },
+        "display": "name",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string",
+            "widget": "text",
+            "required": true,
+            "auto": false,
+            "labels": {
+              "en": "Name"
+            }
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "widget": "datetime",
+            "required": false,
+            "auto": true,
+            "system": true,
+            "labels": {
+              "en": "Created",
+              "ar": "تاريخ الإنشاء"
+            }
+          }
+        ],
+        "relations": [
+          {
+            "relationship": "department_faculty",
+            "side": "to",
+            "other": "department",
+            "type": "many-to-one",
+            "many": true,
+            "title": {
+              "entity": "department"
+            },
+            "attributes": [],
+            "paths": {
+              "list": "/api/faculties/:toId/department-faculties",
+              "create": "/api/departments/:fromId/department-faculties",
+              "update": "/api/departments/:fromId/department-faculties/:toId",
+              "delete": "/api/departments/:fromId/department-faculties/:toId"
+            }
+          }
+        ],
+        "filters": [],
+        "search_fields": [
+          "name"
+        ],
+        "surfaces": {
+          "notifications": false,
+          "activity": false
+        },
+        "api": {
+          "list": {
+            "method": "GET",
+            "path": "/api/faculties"
+          },
+          "create": {
+            "method": "POST",
+            "path": "/api/faculties"
+          },
+          "read": {
+            "method": "GET",
+            "path": "/api/faculties/:id"
+          },
+          "update": {
+            "method": "PATCH",
+            "path": "/api/faculties/:id"
+          },
+          "archive": {
+            "method": "DELETE",
+            "path": "/api/faculties/:id"
+          }
+        }
+      }
+    ],
+    "events": [
+      {
+        "id": "student.enrolled",
+        "labels": {
+          "en": "Student Enrolled"
+        },
+        "type": "create"
+      },
+      {
+        "id": "student.graduated",
+        "labels": {
+          "en": "Student Graduated"
+        },
+        "type": "custom"
+      },
+      {
+        "id": "professor.hired",
+        "labels": {
+          "en": "Professor Hired"
+        },
+        "type": "custom"
+      }
+    ],
+    "navigation": {
+      "type": "sidebar",
+      "items": [
+        "students",
+        "professors",
+        "courses",
+        "departments",
+        "faculties"
+      ]
+    },
+    "dashboard": {
+      "path": "/",
+      "widgets": [
+        {
+          "kind": "count",
+          "data_source": "students",
+          "permission": "entity:student:list",
+          "labels": {
+            "en": "Students"
+          }
+        },
+        {
+          "kind": "count",
+          "data_source": "professors",
+          "permission": "entity:professor:list",
+          "labels": {
+            "en": "Professors"
+          }
+        },
+        {
+          "kind": "count",
+          "data_source": "courses",
+          "permission": "entity:course:list",
+          "labels": {
+            "en": "Courses"
+          }
+        },
+        {
+          "kind": "count",
+          "data_source": "departments",
+          "permission": "entity:department:list",
+          "labels": {
+            "en": "Departments"
+          }
+        },
+        {
+          "kind": "count",
+          "data_source": "faculties",
+          "permission": "entity:faculty:list",
+          "labels": {
+            "en": "Faculties"
+          }
+        }
+      ]
+    },
+    "directions": {
+      "ar": "rtl",
+      "en": "ltr"
+    },
+    "theme": {
+      "primary_color": "#1E3A8A",
+      "density": "medium"
+    },
+    "permissions": [
+      "entity:student:list",
+      "entity:student:read",
+      "entity:student:create",
+      "entity:student:update",
+      "entity:student:archive",
+      "entity:professor:list",
+      "entity:professor:read",
+      "entity:professor:create",
+      "entity:professor:update",
+      "entity:professor:archive",
+      "entity:course:list",
+      "entity:course:read",
+      "entity:course:create",
+      "entity:course:update",
+      "entity:course:archive",
+      "entity:department:list",
+      "entity:department:read",
+      "entity:department:create",
+      "entity:department:update",
+      "entity:department:archive",
+      "entity:faculty:list",
+      "entity:faculty:read",
+      "entity:faculty:create",
+      "entity:faculty:update",
+      "entity:faculty:archive",
+      "relationship:enrollment:read",
+      "relationship:enrollment:link",
+      "relationship:enrollment:unlink",
+      "relationship:teaching:read",
+      "relationship:teaching:link",
+      "relationship:teaching:unlink",
+      "relationship:course_department:read",
+      "relationship:course_department:link",
+      "relationship:course_department:unlink",
+      "relationship:department_faculty:read",
+      "relationship:department_faculty:link",
+      "relationship:department_faculty:unlink"
+    ]
+  }
+}

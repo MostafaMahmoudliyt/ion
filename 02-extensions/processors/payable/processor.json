@@ -1,0 +1,87 @@
+{
+  "id": "payable",
+  "key": "payable",
+  "on": "entity",
+  "version": "1.0.0",
+  "params": {
+    "currency": {
+      "enum": [
+        "USD",
+        "EUR",
+        "EGP",
+        "SAR"
+      ],
+      "default": "USD"
+    }
+  },
+  "expand": {
+    "entities": [
+      {
+        "id": "{{entity.id}}_payment",
+        "name": "{{entity.name}} Payment",
+        "type": "transaction",
+        "metadata": {
+          "versioned": true,
+          "indexed": [
+            "status"
+          ]
+        },
+        "attributes": [
+          {
+            "name": "amount",
+            "type": "money",
+            "required": true
+          },
+          {
+            "name": "currency",
+            "type": "enum",
+            "values": [
+              "USD",
+              "EUR",
+              "EGP",
+              "SAR"
+            ],
+            "default": "{{param.currency}}"
+          },
+          {
+            "name": "status",
+            "type": "enum",
+            "values": [
+              "pending",
+              "paid",
+              "failed",
+              "refunded"
+            ],
+            "default": "pending",
+            "metadata": {
+              "transitions": {
+                "pending": [
+                  "paid",
+                  "failed"
+                ],
+                "paid": [
+                  "refunded"
+                ]
+              }
+            }
+          },
+          {
+            "name": "reference",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "id": "{{entity.id}}_payments",
+        "from": "{{entity.id}}_payment",
+        "to": "{{entity.id}}",
+        "type": "many-to-one",
+        "metadata": {
+          "cascade": "restrict"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "ui-web",
+  "kind": "ui",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["ui"],
+  "ion": "3.0.0",
+  "description": "ui_spec -> a dependency-free web app (index.html, app.js, styles.css, demo.html): list/detail/create/edit pages, filters, search, pagination, related items, notifications, ar (RTL) and en (LTR).",
+  "target": "web"
+}

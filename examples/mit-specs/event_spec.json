@@ -1,0 +1,191 @@
+{
+  "event_spec": {
+    "events": [
+      {
+        "id": "student.enrolled",
+        "name": "Student Enrolled",
+        "type": "create",
+        "actor": "student",
+        "target": "course",
+        "relationship": "enrollment",
+        "triggers": [
+          {
+            "action": "send_notification",
+            "to": "student",
+            "row": "actor",
+            "message": "You are enrolled in a course"
+          },
+          {
+            "action": "increment",
+            "entity": "course",
+            "attribute": "enrolled_count",
+            "field": "course.enrolled_count",
+            "row": "target",
+            "by": 1
+          },
+          {
+            "action": "log",
+            "to": "audit"
+          }
+        ],
+        "rate": {
+          "max": 1000,
+          "per_seconds": 60
+        },
+        "compensations": []
+      },
+      {
+        "id": "student.graduated",
+        "name": "Student Graduated",
+        "type": "custom",
+        "actor": "student",
+        "target": "course",
+        "triggers": [
+          {
+            "action": "send_notification",
+            "to": "student",
+            "row": "actor",
+            "message": "Congratulations, you graduated"
+          },
+          {
+            "action": "update_field",
+            "entity": "student",
+            "attribute": "status",
+            "field": "student.status",
+            "row": "actor",
+            "value": "graduated"
+          },
+          {
+            "action": "send_email",
+            "to": "student",
+            "row": "actor",
+            "attribute": "email",
+            "subject": "Graduation",
+            "body": "Congratulations on your graduation."
+          }
+        ],
+        "compensations": []
+      },
+      {
+        "id": "professor.hired",
+        "name": "Professor Hired",
+        "type": "custom",
+        "actor": "department",
+        "target": "professor",
+        "triggers": [
+          {
+            "action": "send_notification",
+            "to": "professor",
+            "row": "target",
+            "message": "Welcome to the department"
+          },
+          {
+            "action": "increment",
+            "entity": "department",
+            "attribute": "professor_count",
+            "field": "department.professor_count",
+            "row": "actor",
+            "by": 1
+          },
+          {
+            "action": "log",
+            "to": "audit"
+          }
+        ],
+        "compensations": []
+      }
+    ],
+    "system_records": {
+      "ledger": {
+        "fields": [
+          {
+            "name": "event_id",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "actor_id",
+            "type": "uuid",
+            "nullable": false
+          },
+          {
+            "name": "target_id",
+            "type": "uuid",
+            "nullable": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "nullable": false
+          }
+        ],
+        "append_only": true
+      },
+      "audit": {
+        "fields": [
+          {
+            "name": "event_id",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "actor_id",
+            "type": "uuid",
+            "nullable": false
+          },
+          {
+            "name": "target_id",
+            "type": "uuid",
+            "nullable": false
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "nullable": false
+          }
+        ],
+        "append_only": true
+      },
+      "notifications": {
+        "fields": [
+          {
+            "name": "event_id",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "recipient_entity",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "recipient_id",
+            "type": "uuid",
+            "nullable": false
+          },
+          {
+            "name": "message",
+            "type": "string",
+            "nullable": false
+          },
+          {
+            "name": "read_at",
+            "type": "timestamp",
+            "nullable": true
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp",
+            "nullable": false
+          },
+          {
+            "name": "archived_at",
+            "type": "timestamp",
+            "nullable": true
+          }
+        ],
+        "append_only": false
+      }
+    }
+  }
+}

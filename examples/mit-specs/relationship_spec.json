@@ -1,0 +1,252 @@
+{
+  "relationship_spec": {
+    "relationships": [
+      {
+        "id": "enrollment",
+        "from": "student",
+        "to": "course",
+        "type": "many-to-many",
+        "storage": {
+          "table": "enrollments",
+          "columns": [
+            "student_id",
+            "course_id",
+            "grade",
+            "enrolled_on"
+          ]
+        },
+        "junction": {
+          "table": "enrollments",
+          "columns": [
+            {
+              "name": "student_id",
+              "references": "students.id"
+            },
+            {
+              "name": "course_id",
+              "references": "courses.id"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "grade",
+              "type": "number",
+              "nullable": true
+            },
+            {
+              "name": "enrolled_on",
+              "type": "date",
+              "nullable": true,
+              "auto": true
+            }
+          ],
+          "unique": [
+            [
+              "student_id",
+              "course_id"
+            ]
+          ],
+          "indexes": [
+            [
+              "course_id"
+            ]
+          ],
+          "active_only": true
+        },
+        "apis": [
+          {
+            "method": "POST",
+            "path": "/api/students/:fromId/enrollments",
+            "operation": "create",
+            "summary": "Create link Student -> Course (enrollment)"
+          },
+          {
+            "method": "GET",
+            "path": "/api/students/:fromId/enrollments",
+            "operation": "read",
+            "summary": "List Course linked from a Student"
+          },
+          {
+            "method": "GET",
+            "path": "/api/courses/:toId/enrollments",
+            "operation": "read",
+            "summary": "List Student linked to a Course"
+          },
+          {
+            "method": "PATCH",
+            "path": "/api/students/:fromId/enrollments/:toId",
+            "operation": "update",
+            "summary": "Update link Student -> Course (enrollment)"
+          },
+          {
+            "method": "DELETE",
+            "path": "/api/students/:fromId/enrollments/:toId",
+            "operation": "delete",
+            "summary": "Archive link Student -> Course (enrollment)"
+          }
+        ]
+      },
+      {
+        "id": "teaching",
+        "from": "professor",
+        "to": "course",
+        "type": "one-to-many",
+        "cascade": "restrict",
+        "storage": {
+          "table": "courses",
+          "columns": [
+            "professor_id"
+          ]
+        },
+        "foreign_key": {
+          "table": "courses",
+          "column": "professor_id",
+          "references": "professors.id",
+          "create_column": false,
+          "unique": false,
+          "index": true,
+          "attributes": []
+        },
+        "apis": [
+          {
+            "method": "POST",
+            "path": "/api/professors/:fromId/teachings",
+            "operation": "create",
+            "summary": "Create link Professor -> Course (teaching)"
+          },
+          {
+            "method": "GET",
+            "path": "/api/professors/:fromId/teachings",
+            "operation": "read",
+            "summary": "List Course linked from a Professor"
+          },
+          {
+            "method": "GET",
+            "path": "/api/courses/:toId/teachings",
+            "operation": "read",
+            "summary": "List Professor linked to a Course"
+          },
+          {
+            "method": "PATCH",
+            "path": "/api/professors/:fromId/teachings/:toId",
+            "operation": "update",
+            "summary": "Update link Professor -> Course (teaching)"
+          },
+          {
+            "method": "DELETE",
+            "path": "/api/professors/:fromId/teachings/:toId",
+            "operation": "delete",
+            "summary": "Archive link Professor -> Course (teaching)"
+          }
+        ]
+      },
+      {
+        "id": "course_department",
+        "from": "course",
+        "to": "department",
+        "type": "many-to-one",
+        "storage": {
+          "table": "courses",
+          "columns": [
+            "department_id"
+          ]
+        },
+        "foreign_key": {
+          "table": "courses",
+          "column": "department_id",
+          "references": "departments.id",
+          "create_column": true,
+          "unique": false,
+          "index": true,
+          "attributes": []
+        },
+        "apis": [
+          {
+            "method": "POST",
+            "path": "/api/courses/:fromId/course-departments",
+            "operation": "create",
+            "summary": "Create link Course -> Department (course_department)"
+          },
+          {
+            "method": "GET",
+            "path": "/api/courses/:fromId/course-departments",
+            "operation": "read",
+            "summary": "List Department linked from a Course"
+          },
+          {
+            "method": "GET",
+            "path": "/api/departments/:toId/course-departments",
+            "operation": "read",
+            "summary": "List Course linked to a Department"
+          },
+          {
+            "method": "PATCH",
+            "path": "/api/courses/:fromId/course-departments/:toId",
+            "operation": "update",
+            "summary": "Update link Course -> Department (course_department)"
+          },
+          {
+            "method": "DELETE",
+            "path": "/api/courses/:fromId/course-departments/:toId",
+            "operation": "delete",
+            "summary": "Archive link Course -> Department (course_department)"
+          }
+        ]
+      },
+      {
+        "id": "department_faculty",
+        "from": "department",
+        "to": "faculty",
+        "type": "many-to-one",
+        "cascade": "restrict",
+        "storage": {
+          "table": "departments",
+          "columns": [
+            "faculty_id"
+          ]
+        },
+        "foreign_key": {
+          "table": "departments",
+          "column": "faculty_id",
+          "references": "faculties.id",
+          "create_column": false,
+          "unique": false,
+          "index": true,
+          "attributes": []
+        },
+        "apis": [
+          {
+            "method": "POST",
+            "path": "/api/departments/:fromId/department-faculties",
+            "operation": "create",
+            "summary": "Create link Department -> Faculty (department_faculty)"
+          },
+          {
+            "method": "GET",
+            "path": "/api/departments/:fromId/department-faculties",
+            "operation": "read",
+            "summary": "List Faculty linked from a Department"
+          },
+          {
+            "method": "GET",
+            "path": "/api/faculties/:toId/department-faculties",
+            "operation": "read",
+            "summary": "List Department linked to a Faculty"
+          },
+          {
+            "method": "PATCH",
+            "path": "/api/departments/:fromId/department-faculties/:toId",
+            "operation": "update",
+            "summary": "Update link Department -> Faculty (department_faculty)"
+          },
+          {
+            "method": "DELETE",
+            "path": "/api/departments/:fromId/department-faculties/:toId",
+            "operation": "delete",
+            "summary": "Archive link Department -> Faculty (department_faculty)"
+          }
+        ]
+      }
+    ]
+  }
+}

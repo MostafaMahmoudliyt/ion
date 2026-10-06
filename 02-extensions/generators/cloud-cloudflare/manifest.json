@@ -1,0 +1,11 @@
+{
+  "id": "cloud-cloudflare",
+  "kind": "cloud",
+  "version": "1.0.0",
+  "official": true,
+  "entry": "index.ts",
+  "reads": ["ui"],
+  "ion": "3.0.0",
+  "description": "Cloud Generator: Cloudflare Workers static assets configuration serving the web output of the same .uapp (../../web).",
+  "target": "cloud/cloudflare"
+}

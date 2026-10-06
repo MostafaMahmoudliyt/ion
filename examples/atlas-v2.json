@@ -1,0 +1,1961 @@
+{
+ "app": {
+  "id": "atlas",
+  "name": "Atlas Marketplace",
+  "domain": "commerce"
+ },
+ "entities": [
+  {
+   "id": "customer",
+   "name": "Customer",
+   "type": "person",
+   "attributes": [
+    {
+     "name": "name",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "email",
+     "type": "email",
+     "required": true,
+     "unique": true
+    },
+    {
+     "name": "phone",
+     "type": "phone"
+    },
+    {
+     "name": "loyalty_points",
+     "type": "integer",
+     "default": 0
+    },
+    {
+     "name": "tier",
+     "type": "enum",
+     "values": [
+      "basic",
+      "silver",
+      "gold"
+     ],
+     "default": "basic",
+     "metadata": {
+      "transitions": {
+       "basic": [
+        "silver"
+       ],
+       "silver": [
+        "gold"
+       ]
+      }
+     }
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "email"
+    ]
+   }
+  },
+  {
+   "id": "vendor",
+   "name": "Vendor",
+   "type": "organization",
+   "attributes": [
+    {
+     "name": "name",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "email",
+     "type": "email",
+     "required": true,
+     "unique": true
+    },
+    {
+     "name": "rating",
+     "type": "number"
+    },
+    {
+     "name": "status",
+     "type": "enum",
+     "values": [
+      "pending",
+      "approved",
+      "suspended"
+     ],
+     "default": "pending",
+     "metadata": {
+      "transitions": {
+       "pending": [
+        "approved"
+       ],
+       "approved": [
+        "suspended"
+       ],
+       "suspended": [
+        "approved"
+       ]
+      }
+     }
+    },
+    {
+     "name": "website",
+     "type": "string"
+    }
+   ],
+   "metadata": {
+    "versioned": true
+   }
+  },
+  {
+   "id": "courier",
+   "name": "Courier",
+   "type": "person",
+   "attributes": [
+    {
+     "name": "name",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "phone",
+     "type": "phone",
+     "required": true
+    },
+    {
+     "name": "deliveries_done",
+     "type": "integer",
+     "default": 0
+    },
+    {
+     "name": "availability",
+     "type": "enum",
+     "values": [
+      "offline",
+      "available",
+      "busy"
+     ],
+     "default": "offline"
+    }
+   ]
+  },
+  {
+   "id": "category",
+   "name": "Category",
+   "type": "category",
+   "attributes": [
+    {
+     "name": "name",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "slug",
+     "type": "string",
+     "unique": true
+    }
+   ]
+  },
+  {
+   "id": "product",
+   "name": "Product",
+   "type": "product",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "price",
+     "type": "money",
+     "required": true
+    },
+    {
+     "name": "stock",
+     "type": "integer",
+     "default": 0
+    },
+    {
+     "name": "sold_count",
+     "type": "integer",
+     "default": 0
+    },
+    {
+     "name": "listing",
+     "type": "enum",
+     "values": [
+      "draft",
+      "live",
+      "retired"
+     ],
+     "default": "draft",
+     "metadata": {
+      "transitions": {
+       "draft": [
+        "live"
+       ],
+       "live": [
+        "retired"
+       ]
+      }
+     }
+    },
+    {
+     "name": "rating_avg",
+     "type": "number"
+    },
+    {
+     "name": "sku",
+     "type": "string",
+     "required": true,
+     "default": "UNSET"
+    }
+   ],
+   "metadata": {
+    "versioned": true,
+    "indexed": [
+     "title"
+    ],
+    "commentable": true
+   }
+  },
+  {
+   "id": "warehouse",
+   "name": "Warehouse",
+   "type": "place",
+   "attributes": [
+    {
+     "name": "name",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "city",
+     "type": "string"
+    },
+    {
+     "name": "capacity",
+     "type": "integer"
+    }
+   ]
+  },
+  {
+   "id": "order",
+   "name": "Order",
+   "type": "transaction",
+   "attributes": [
+    {
+     "name": "reference",
+     "type": "string",
+     "required": true,
+     "unique": true
+    },
+    {
+     "name": "total",
+     "type": "money",
+     "default": 0
+    },
+    {
+     "name": "item_count",
+     "type": "integer",
+     "default": 0
+    },
+    {
+     "name": "state",
+     "type": "enum",
+     "values": [
+      "placed",
+      "paid",
+      "packed",
+      "shipped",
+      "delivered",
+      "cancelled",
+      "returned"
+     ],
+     "default": "placed",
+     "metadata": {
+      "transitions": {
+       "placed": [
+        "paid",
+        "cancelled"
+       ],
+       "paid": [
+        "packed",
+        "cancelled"
+       ],
+       "packed": [
+        "shipped"
+       ],
+       "shipped": [
+        "delivered"
+       ],
+       "delivered": [
+        "returned"
+       ]
+      }
+     }
+    }
+   ],
+   "metadata": {
+    "versioned": true,
+    "indexed": [
+     "state"
+    ],
+    "payable": {
+     "currency": "EGP"
+    },
+    "commentable": true
+   }
+  },
+  {
+   "id": "order_item",
+   "name": "Order Item",
+   "type": "transaction",
+   "attributes": [
+    {
+     "name": "quantity",
+     "type": "integer",
+     "required": true
+    },
+    {
+     "name": "unit_price",
+     "type": "money",
+     "required": true
+    }
+   ]
+  },
+  {
+   "id": "shipment",
+   "name": "Shipment",
+   "type": "process",
+   "attributes": [
+    {
+     "name": "tracking_code",
+     "type": "string",
+     "required": true,
+     "unique": true
+    },
+    {
+     "name": "state",
+     "type": "enum",
+     "values": [
+      "created",
+      "in_transit",
+      "delivered",
+      "failed"
+     ],
+     "default": "created",
+     "metadata": {
+      "transitions": {
+       "created": [
+        "in_transit"
+       ],
+       "in_transit": [
+        "delivered",
+        "failed"
+       ]
+      }
+     }
+    }
+   ],
+   "metadata": {
+    "versioned": true
+   }
+  },
+  {
+   "id": "review",
+   "name": "Review",
+   "type": "review",
+   "attributes": [
+    {
+     "name": "stars",
+     "type": "integer",
+     "required": true
+    },
+    {
+     "name": "body",
+     "type": "string"
+    }
+   ]
+  },
+  {
+   "id": "support_ticket",
+   "name": "Support Ticket",
+   "type": "process",
+   "attributes": [
+    {
+     "name": "subject",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "status",
+     "type": "enum",
+     "values": [
+      "open",
+      "working",
+      "resolved"
+     ],
+     "default": "open",
+     "metadata": {
+      "transitions": {
+       "open": [
+        "working"
+       ],
+       "working": [
+        "resolved"
+       ]
+      }
+     }
+    }
+   ],
+   "metadata": {
+    "commentable": true
+   }
+  },
+  {
+   "id": "coupon",
+   "name": "Coupon",
+   "type": "resource",
+   "attributes": [
+    {
+     "name": "code",
+     "type": "string",
+     "required": true,
+     "unique": true
+    },
+    {
+     "name": "percent",
+     "type": "integer",
+     "required": true
+    },
+    {
+     "name": "uses",
+     "type": "integer",
+     "default": 0
+    }
+   ]
+  },
+  {
+   "id": "ops_record_01",
+   "name": "Ops Record 01",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string"
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_02",
+   "name": "Ops Record 02",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_03",
+   "name": "Ops Record 03",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_04",
+   "name": "Ops Record 04",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_05",
+   "name": "Ops Record 05",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_06",
+   "name": "Ops Record 06",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_07",
+   "name": "Ops Record 07",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_08",
+   "name": "Ops Record 08",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_09",
+   "name": "Ops Record 09",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_10",
+   "name": "Ops Record 10",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_11",
+   "name": "Ops Record 11",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_12",
+   "name": "Ops Record 12",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_13",
+   "name": "Ops Record 13",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_14",
+   "name": "Ops Record 14",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_15",
+   "name": "Ops Record 15",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_16",
+   "name": "Ops Record 16",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_17",
+   "name": "Ops Record 17",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_18",
+   "name": "Ops Record 18",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_19",
+   "name": "Ops Record 19",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_20",
+   "name": "Ops Record 20",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_21",
+   "name": "Ops Record 21",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_22",
+   "name": "Ops Record 22",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_23",
+   "name": "Ops Record 23",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_24",
+   "name": "Ops Record 24",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_25",
+   "name": "Ops Record 25",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_26",
+   "name": "Ops Record 26",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_27",
+   "name": "Ops Record 27",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_28",
+   "name": "Ops Record 28",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_29",
+   "name": "Ops Record 29",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "ops_record_30",
+   "name": "Ops Record 30",
+   "type": "document",
+   "attributes": [
+    {
+     "name": "title",
+     "type": "string",
+     "required": true
+    },
+    {
+     "name": "kind",
+     "type": "enum",
+     "values": [
+      "a",
+      "b",
+      "c"
+     ],
+     "default": "a"
+    },
+    {
+     "name": "counter",
+     "type": "integer",
+     "default": 0
+    }
+   ],
+   "metadata": {
+    "indexed": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "promotion",
+   "name": "Promotion",
+   "type": "resource",
+   "attributes": [
+    {
+     "name": "label",
+     "type": "string",
+     "required": true
+    }
+   ]
+  }
+ ],
+ "relationships": [
+  {
+   "id": "vendor_products",
+   "from": "vendor",
+   "to": "product",
+   "type": "one-to-many",
+   "metadata": {
+    "cascade": "restrict"
+   }
+  },
+  {
+   "id": "product_category",
+   "from": "product",
+   "to": "category",
+   "type": "many-to-one"
+  },
+  {
+   "id": "customer_orders",
+   "from": "customer",
+   "to": "order",
+   "type": "one-to-many",
+   "metadata": {
+    "cascade": "restrict"
+   }
+  },
+  {
+   "id": "order_lines",
+   "from": "order",
+   "to": "order_item",
+   "type": "one-to-many",
+   "metadata": {
+    "cascade": "archive"
+   }
+  },
+  {
+   "id": "line_product",
+   "from": "order_item",
+   "to": "product",
+   "type": "many-to-one"
+  },
+  {
+   "id": "order_shipment",
+   "from": "order",
+   "to": "shipment",
+   "type": "one-to-one"
+  },
+  {
+   "id": "shipment_courier",
+   "from": "shipment",
+   "to": "courier",
+   "type": "many-to-one"
+  },
+  {
+   "id": "shipment_warehouse",
+   "from": "shipment",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "product_reviews",
+   "from": "product",
+   "to": "review",
+   "type": "one-to-many"
+  },
+  {
+   "id": "customer_reviews",
+   "from": "customer",
+   "to": "review",
+   "type": "one-to-many"
+  },
+  {
+   "id": "customer_tickets",
+   "from": "customer",
+   "to": "support_ticket",
+   "type": "one-to-many"
+  },
+  {
+   "id": "order_coupon",
+   "from": "order",
+   "to": "coupon",
+   "type": "many-to-one"
+  },
+  {
+   "id": "category_tree",
+   "from": "category",
+   "to": "category",
+   "type": "self"
+  },
+  {
+   "id": "courier_warehouse",
+   "from": "courier",
+   "to": "warehouse",
+   "type": "many-to-many",
+   "attributes": [
+    {
+     "name": "since",
+     "type": "date",
+     "auto": true
+    }
+   ]
+  },
+  {
+   "id": "customer_wishlist",
+   "from": "customer",
+   "to": "product",
+   "type": "many-to-many"
+  },
+  {
+   "id": "ops_01_warehouse",
+   "from": "ops_record_01",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_02_warehouse",
+   "from": "ops_record_02",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_03_warehouse",
+   "from": "ops_record_03",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_04_warehouse",
+   "from": "ops_record_04",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_05_warehouse",
+   "from": "ops_record_05",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_06_warehouse",
+   "from": "ops_record_06",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_07_warehouse",
+   "from": "ops_record_07",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_08_warehouse",
+   "from": "ops_record_08",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_09_warehouse",
+   "from": "ops_record_09",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_10_warehouse",
+   "from": "ops_record_10",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_11_warehouse",
+   "from": "ops_record_11",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_12_warehouse",
+   "from": "ops_record_12",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_13_warehouse",
+   "from": "ops_record_13",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_14_warehouse",
+   "from": "ops_record_14",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_15_warehouse",
+   "from": "ops_record_15",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_16_warehouse",
+   "from": "ops_record_16",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_17_warehouse",
+   "from": "ops_record_17",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_18_warehouse",
+   "from": "ops_record_18",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_19_warehouse",
+   "from": "ops_record_19",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_20_warehouse",
+   "from": "ops_record_20",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_21_warehouse",
+   "from": "ops_record_21",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_22_warehouse",
+   "from": "ops_record_22",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_23_warehouse",
+   "from": "ops_record_23",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_24_warehouse",
+   "from": "ops_record_24",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_25_warehouse",
+   "from": "ops_record_25",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_26_warehouse",
+   "from": "ops_record_26",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_27_warehouse",
+   "from": "ops_record_27",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_28_warehouse",
+   "from": "ops_record_28",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_29_warehouse",
+   "from": "ops_record_29",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "ops_30_warehouse",
+   "from": "ops_record_30",
+   "to": "warehouse",
+   "type": "many-to-one"
+  },
+  {
+   "id": "promotion_products",
+   "from": "promotion",
+   "to": "product",
+   "type": "many-to-many"
+  }
+ ],
+ "events": [
+  {
+   "id": "customer.ordered",
+   "name": "Customer Ordered",
+   "actor": "customer",
+   "target": "order",
+   "triggers": [
+    {
+     "action": "send_notification",
+     "to": "customer",
+     "message": "Order received"
+    },
+    {
+     "action": "increment",
+     "field": "customer.loyalty_points",
+     "on": "actor",
+     "by": 10
+    },
+    {
+     "action": "log",
+     "to": "audit"
+    },
+    {
+     "action": "trigger_workflow",
+     "workflow": "order.payment_requested"
+    }
+   ],
+   "relationship": "customer_orders",
+   "type": "create",
+   "metadata": {
+    "rate": {
+     "max": 500,
+     "per_seconds": 60
+    }
+   }
+  },
+  {
+   "id": "order.payment_requested",
+   "name": "Order Payment Requested",
+   "actor": "customer",
+   "target": "order",
+   "triggers": [
+    {
+     "action": "send_notification",
+     "to": "customer",
+     "message": "Please pay"
+    },
+    {
+     "action": "log",
+     "to": "audit"
+    }
+   ]
+  },
+  {
+   "id": "order.paid",
+   "name": "Order Paid",
+   "actor": "customer",
+   "target": "order",
+   "triggers": [
+    {
+     "action": "update_field",
+     "field": "order.state",
+     "value": "paid",
+     "on": "target"
+    },
+    {
+     "action": "send_email",
+     "to": "customer",
+     "subject": "Payment received",
+     "body": "Thanks"
+    },
+    {
+     "action": "trigger_workflow",
+     "workflow": "order.packed"
+    }
+   ]
+  },
+  {
+   "id": "order.packed",
+   "name": "Order Packed",
+   "actor": "customer",
+   "target": "order",
+   "triggers": [
+    {
+     "action": "update_field",
+     "field": "order.state",
+     "value": "packed",
+     "on": "target"
+    },
+    {
+     "action": "log",
+     "to": "audit"
+    },
+    {
+     "action": "trigger_workflow",
+     "workflow": "order.shipped"
+    }
+   ]
+  },
+  {
+   "id": "order.shipped",
+   "name": "Order Shipped",
+   "actor": "customer",
+   "target": "order",
+   "triggers": [
+    {
+     "action": "update_field",
+     "field": "order.state",
+     "value": "shipped",
+     "on": "target"
+    },
+    {
+     "action": "send_notification",
+     "to": "customer",
+     "message": "On its way"
+    }
+   ]
+  },
+  {
+   "id": "order.delivered",
+   "name": "Order Delivered",
+   "actor": "courier",
+   "target": "order",
+   "triggers": [
+    {
+     "action": "update_field",
+     "field": "order.state",
+     "value": "delivered",
+     "on": "target"
+    },
+    {
+     "action": "increment",
+     "field": "courier.deliveries_done",
+     "on": "actor"
+    },
+    {
+     "action": "call_webhook",
+     "url": "https://example.com/hooks/delivered"
+    },
+    {
+     "action": "log",
+     "to": "audit"
+    }
+   ]
+  },
+  {
+   "id": "line.added",
+   "name": "Line Added",
+   "actor": "order_item",
+   "target": "product",
+   "triggers": [
+    {
+     "action": "decrement",
+     "field": "product.stock",
+     "on": "target"
+    },
+    {
+     "action": "increment",
+     "field": "product.sold_count",
+     "on": "target"
+    }
+   ],
+   "relationship": "line_product",
+   "type": "create",
+   "metadata": {
+    "rate": {
+     "max": 2000,
+     "per_seconds": 60
+    }
+   }
+  },
+  {
+   "id": "vendor.approved",
+   "name": "Vendor Approved",
+   "actor": "vendor",
+   "target": "product",
+   "triggers": [
+    {
+     "action": "update_field",
+     "field": "vendor.status",
+     "value": "approved",
+     "on": "actor"
+    },
+    {
+     "action": "send_notification",
+     "to": "vendor",
+     "message": "Approved"
+    },
+    {
+     "action": "log",
+     "to": "audit"
+    }
+   ]
+  },
+  {
+   "id": "product.published",
+   "name": "Product Published",
+   "actor": "vendor",
+   "target": "product",
+   "triggers": [
+    {
+     "action": "update_field",
+     "field": "product.listing",
+     "value": "live",
+     "on": "target"
+    },
+    {
+     "action": "log",
+     "to": "audit"
+    }
+   ]
+  },
+  {
+   "id": "review.posted",
+   "name": "Review Posted",
+   "actor": "customer",
+   "target": "review",
+   "triggers": [
+    {
+     "action": "send_notification",
+     "to": "customer",
+     "message": "Review posted"
+    },
+    {
+     "action": "increment",
+     "field": "customer.loyalty_points",
+     "on": "actor",
+     "by": 5
+    }
+   ],
+   "relationship": "customer_reviews",
+   "type": "create"
+  },
+  {
+   "id": "ticket.opened",
+   "name": "Ticket Opened",
+   "actor": "customer",
+   "target": "support_ticket",
+   "triggers": [
+    {
+     "action": "send_notification",
+     "to": "customer",
+     "message": "Ticket opened"
+    },
+    {
+     "action": "log",
+     "to": "audit"
+    }
+   ],
+   "relationship": "customer_tickets",
+   "type": "create"
+  }
+ ]
+}

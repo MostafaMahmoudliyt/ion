@@ -1,0 +1,70 @@
+{
+  "generators": [
+    {
+      "id": "sql-postgres",
+      "path": "generators/sql-postgres",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "events-node-postgres",
+      "path": "generators/events-node-postgres",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "ui-web",
+      "path": "generators/ui-web",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "api-rest",
+      "path": "generators/api-rest",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "ui-terminal",
+      "path": "generators/ui-terminal",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "ui-android",
+      "path": "generators/ui-android",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "ui-ios",
+      "path": "generators/ui-ios",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "ui-desktop",
+      "path": "generators/ui-desktop",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "cloud-cloudflare",
+      "path": "generators/cloud-cloudflare",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "ui-advanced",
+      "path": "generators/ui-advanced",
+      "version": "1.0.0",
+      "official": true
+    },
+    {
+      "id": "server-node-sqlite",
+      "path": "generators/server-node-sqlite",
+      "version": "1.0.0",
+      "official": true
+    }
+  ]
+}

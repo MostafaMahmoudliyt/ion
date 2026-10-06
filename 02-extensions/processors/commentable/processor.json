@@ -1,0 +1,27 @@
+{
+  "id": "commentable",
+  "key": "commentable",
+  "on": "entity",
+  "version": "1.0.0",
+  "expand": {
+    "entities": [
+      {
+        "id": "{{entity.id}}_comment",
+        "name": "{{entity.name}} Comment",
+        "type": "message",
+        "attributes": [
+          { "name": "body", "type": "string", "required": true }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "id": "{{entity.id}}_comments",
+        "from": "{{entity.id}}_comment",
+        "to": "{{entity.id}}",
+        "type": "many-to-one",
+        "metadata": { "cascade": "archive" }
+      }
+    ]
+  }
+}

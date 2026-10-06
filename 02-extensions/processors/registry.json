@@ -1,0 +1,6 @@
+{
+  "processors": [
+    { "id": "commentable", "path": "commentable", "version": "1.0.0" },
+    { "id": "payable", "path": "payable", "version": "1.0.0" }
+  ]
+}
