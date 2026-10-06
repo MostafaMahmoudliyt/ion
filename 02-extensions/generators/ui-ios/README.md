@@ -11,4 +11,4 @@ Backend: Info.plist keys `ION_API` (base URL of the `api-rest` routes; empty = i
 
 Screens: menu, list (search, paging), detail, create, edit, archive; Arabic is RTL, with a language switch. Not in this renderer: filters, related items, notifications, activity (web has them).
 
-**Status: this renderer's output has NOT been compiled** (no Xcode where it was written). Tests check the structure of what is generated (files, project.yml, the spec resource, determinism, no dynamic-code APIs), not that Xcode builds it. Expect to fix small compile errors on first build.
+**Status: compiled by CI** for the iOS Simulator on macOS 14 with Xcode 15.4. CI does not sign or archive the app; an IPA still requires your signing team. Tests also check the generated structure, determinism and absence of dynamic-code APIs.
