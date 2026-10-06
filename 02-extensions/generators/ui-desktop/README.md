@@ -5,4 +5,4 @@ It does **not** duplicate the web UI: `frontendDist` is `../../web`, the folder 
 The window opens `demo.html` (in-memory data, every permission); switch to `index.html` and add your backend to the CSP `connect-src` for production. The window has core capabilities only (no filesystem, no shell).
 Bundling needs icons: run `npx tauri icon <png>` once (binary files are not generated). Each OS builds its own installer (DMG, MSI/EXE, AppImage).
 
-**Status: not built** (no Rust/Tauri toolchain where it was written). Tests check the generated structure and that `../../web` resolves to the web output inside a real `.uapp`.
+**Status: built by CI** for Linux, macOS and Windows; the installers are uploaded as workflow artifacts. Tests also check the generated structure and that `../../web` resolves to the web output inside a real `.uapp`.

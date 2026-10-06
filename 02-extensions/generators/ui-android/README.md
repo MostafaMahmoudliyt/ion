@@ -9,4 +9,4 @@ Backend: `buildConfigField` values `ION_API` (base URL of the `api-rest` routes;
 
 Screens: menu, list (search, paging), detail, create, edit, archive; Arabic is RTL, with a language switch. Not in this renderer: filters, related items, notifications, activity (web has them).
 
-**Status: this renderer's output has NOT been compiled** (no Android SDK where it was written). Tests check the structure of what is generated (files, manifest, package paths, the spec asset, determinism, no cleartext, no eval-like APIs), not that Gradle builds it. Expect to fix small compile errors on first build.
+**Status: compiled by CI** as a debug APK. The APK is not installed or runtime-tested on a device. Tests also check the generated structure, determinism, HTTPS-only networking and absence of eval-like APIs.
