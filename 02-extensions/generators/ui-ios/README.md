@@ -2,6 +2,8 @@
 
 iOS Renderer (kind `ui`). Reads `ui_spec`; writes a SwiftUI app (iOS 16+) and an [XcodeGen](https://github.com/yonaskolb/XcodeGen) `project.yml`.
 
+The generated Xcode project is pinned to the Xcode 15.3 project format for compatibility with the Xcode 15.4 toolchain on the macOS 14 runner.
+
 On a Mac: `brew install xcodegen && xcodegen generate && open IonApp.xcodeproj`, then Archive in Xcode for an IPA (you supply your signing team).
 The Swift sources are fixed; they read `Resources/ui_spec.json`, so only that file changes with the spec.
 
